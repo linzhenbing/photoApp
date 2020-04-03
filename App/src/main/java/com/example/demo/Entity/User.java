@@ -1,10 +1,13 @@
 package com.example.demo.Entity;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+
 public class User {
     @Id
     @GeneratedValue

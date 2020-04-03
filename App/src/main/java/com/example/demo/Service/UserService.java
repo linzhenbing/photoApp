@@ -9,11 +9,10 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private final UserDao userDao;
+
     @Autowired
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    private  UserDao userDao;
+
 
     public List<User> getUser() {
         return userDao.getUser();

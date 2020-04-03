@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.Dao.PhotoDao">
+    <resultMap id="BaseResultMap" type="com.example.demo.Entity.Photo">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="img1" property="img1" />
+        <result column="img2" property="img2" />
+        <result column="img3" property="img3" />
+        <result column="music" property="music" />
+        <result column="createtime" property="createtime" />
+        <result column="description" property="description" />
+    </resultMap>
+
+
+    <insert id="upLoadImg" parameterType="com.example.demo.Entity.Photo">
+        insert into photo(name,img1,img2,img3,music,createtime,description)
+        values(#{name},#{img1},#{img2},#{img3},#{music},#{createtime},#{desprition})
+    </insert>
+
+</mapper>

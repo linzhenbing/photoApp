@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.Entity.User;
 import com.example.demo.Service.UserService;
 import com.example.demo.Tools.JsonResult;
@@ -15,22 +16,31 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user")
+@CrossOrigin
 public class UserController {
-    private final UserService userService;
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
+    @Autowired
+    private  UserService userService;
+
+
+    @PostMapping("/info")
+    public JsonResult<JSONObject> info(@RequestParam String token){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("roles","admin");
+        jsonObject.put("introduction","hello");
+        jsonObject.put("avatar","he2llo");
+        jsonObject.put("name","how");
+        return new JsonResult<>(200,"登录成功",jsonObject);
+    }
 
     @GetMapping(value = "/getUser")
     public JsonResult<List<User>> getUser(){
         List<User> list = userService.getUser();
         if(list !=null){
-            return new JsonResult<>(20000,"",list);
+            return new JsonResult<>(200,"",list);
         }
-        return new JsonResult<>(20000,"查询数据为空",null);
-    }
+        return new JsonResult<>(200,"查询数据为空",null);
+}
     public User getByUserName(String username){
         return userService.getUserByUserName(username);
     }
@@ -65,7 +75,7 @@ public class UserController {
      * @throws NoSuchAlgorithmException
      */
     @PostMapping("/login")
-    public JsonResult<User> login(@RequestBody User user) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public JsonResult<JSONObject> login(@RequestBody User user) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         user.setPassword(Md5.changeToMd5(user.getPassword()));
         User result = userService.login(user);
         if(result == null){
@@ -73,7 +83,9 @@ public class UserController {
         }else if(result.getState() == 0){
             return new JsonResult<>(200,"用户被禁用",null);
         }else{
-            return new JsonResult<>(200,"登录成功",result);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("token","admin-token");
+            return new JsonResult<>(200,"登录成功",jsonObject);
         }
     }
 

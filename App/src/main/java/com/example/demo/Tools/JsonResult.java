@@ -16,6 +16,7 @@ public class JsonResult<T> implements Serializable {
     private String message = "";
     private T data;
     private String pass="";
+    private String token;
 
     public JsonResult(){
         state = SUCCESS;
@@ -27,14 +28,16 @@ public class JsonResult<T> implements Serializable {
         this.message = message;
         this.data = data;
     }
+
+    public JsonResult(String token) {
+        super();
+        this.token = token;
+    }
     public JsonResult(int state,String error){
         this(state,error,null);
     }
     public JsonResult(int state,T data){
         this(state,"",data);
-    }
-    public JsonResult(String error){
-        this(ERROR,error,null);
     }
 
     public JsonResult(T data){
