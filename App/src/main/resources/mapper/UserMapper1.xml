@@ -25,6 +25,12 @@
            username = #{user.username} and password = #{user.password} and type = #{user.type}
      </select>
 
+    <select id="sercahUser" resultMap="BaseResultMap">
+        select * from user
+        where
+        username like concat('%',#{username},'%')
+    </select>
+
 
     <update id="forbidUser" parameterType="String">
         update user

@@ -33,9 +33,15 @@ public class UserController {
         return new JsonResult<>(200,"登录成功",jsonObject);
     }
 
+    /***
+     * 返回所有用户接口
+     * @return
+     * List<User>
+     */
     @GetMapping(value = "/getUser")
     public JsonResult<List<User>> getUser(){
         List<User> list = userService.getUser();
+
         if(list !=null){
             return new JsonResult<>(200,"",list);
         }
@@ -85,6 +91,8 @@ public class UserController {
         }else{
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("token","admin-token");
+            jsonObject.put("username",result.getUsername());
+            jsonObject.put("type",result.getType());
             return new JsonResult<>(200,"登录成功",jsonObject);
         }
     }
@@ -135,4 +143,16 @@ public class UserController {
         userService.updateUser(user);
         return new JsonResult<>(200,"",null);
     }
+
+    /**
+     * 用户查询接口
+     * @param username
+     * @return
+     */
+    @PostMapping("/searchUser")
+    public JsonResult<List<User>> searchUser(@RequestParam String username){
+        List<User> users = userService.searchUser(username);
+        return new JsonResult<>(200,"",users);
+    }
+
 }

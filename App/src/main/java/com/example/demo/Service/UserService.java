@@ -45,4 +45,8 @@ public class UserService {
     public void updateUser(User user) {
         userDao.updateUser(user);
     }
+
+    public List<User> searchUser(String username) {
+        return userDao.sercahUser(username);
+    }
 }

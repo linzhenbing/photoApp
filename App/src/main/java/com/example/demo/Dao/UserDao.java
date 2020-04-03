@@ -23,4 +23,6 @@ public interface UserDao {
     void deleteUser(@Param("username") String userName);
 
     void updateUser(@Param("user") User user);
+
+    List<User> sercahUser(@Param("username") String username);
 }
