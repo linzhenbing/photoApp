@@ -14,6 +14,12 @@ spring:
     hibernate:
       ddl-auto: update #自动更新，切记不用create，会自动重新创建表的
     show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 1000MB
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.demo.Entity
+upload-photo-path: /usr/local/tomcat8/upload/photo/
+upload-music-path: /usr/local/tomcat8/upload/music/

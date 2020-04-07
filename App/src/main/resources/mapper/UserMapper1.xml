@@ -41,7 +41,7 @@
 
     <update id="updateUser" parameterType="com.example.demo.Entity.User">
         update user
-        set password = #{user.password},type=#{user.type}
+        set password = #{user.password}
         where
         username = #{user.username}
     </update>

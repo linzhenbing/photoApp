@@ -130,17 +130,28 @@ public class UserController {
         return new JsonResult<>(200,"",null);
     }
 
-    /**
-     * 更新用户（包括用户自己更改密码，也包括管理员修改用户）
-     * @param user（username，password,type）
+    /***
+     * 更新用户接口
+     * @param userName
+     * @param oldPassword
+     * @param newPassword
      * @return
      * @throws UnsupportedEncodingException
      * @throws NoSuchAlgorithmException
      */
     @PostMapping("/updateUser")
-    public JsonResult<User> updateUser(@RequestBody User user) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        user.setPassword(Md5.changeToMd5(user.getPassword()));
-        userService.updateUser(user);
+    public JsonResult<User> updateUser(@RequestParam(value = "userName")String userName,
+                                       @RequestParam(value = "oldPassword")String oldPassword,
+                                       @RequestParam(value = "newPassword")String newPassword) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        User user = new User();
+        user.setUsername(userName);
+        user.setPassword(Md5.changeToMd5(oldPassword));
+        if (userService.login(user) == null){
+            return new JsonResult<>(200,"原始密码错误",null);
+        }else {
+            user.setPassword(Md5.changeToMd5(newPassword));
+            userService.updateUser(user);
+        }
         return new JsonResult<>(200,"",null);
     }
 

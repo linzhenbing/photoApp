@@ -12,10 +12,22 @@
         <result column="description" property="description" />
     </resultMap>
 
+    <select id="searchByName" resultMap="BaseResultMap">
+        select * from photo where name = #{name}
+    </select>
+
+    <select id="getImgList" resultMap="BaseResultMap">
+        select * from photo
+    </select>
+
 
     <insert id="upLoadImg" parameterType="com.example.demo.Entity.Photo">
         insert into photo(name,img1,img2,img3,music,createtime,description)
-        values(#{name},#{img1},#{img2},#{img3},#{music},#{createtime},#{desprition})
+        values(#{name},#{img1},#{img2},#{img3},#{music},#{createtime},#{description})
     </insert>
+
+    <delete id="deleteMsg" parameterType="String">
+        delete from photo where name = #{name}
+    </delete>
 
 </mapper>

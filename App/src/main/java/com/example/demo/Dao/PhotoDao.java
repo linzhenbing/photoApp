@@ -1,8 +1,11 @@
 package com.example.demo.Dao;
 
 
+import com.example.demo.Entity.Photo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface PhotoDao {
@@ -13,4 +16,10 @@ public interface PhotoDao {
                    @Param("music") String music,
                    @Param("createtime")String createtime,
                    @Param("description") String description);
+
+    Photo searchByName(@Param("name") String name);
+
+    List<Photo> getImgList();
+
+    void deleteMsg(@Param("name") String name);
 }
