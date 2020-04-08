@@ -9,7 +9,6 @@ spring:
     url: jdbc:mysql://localhost:3306/app_data?serverTimezone=GMT%2B8
     username: root
     password: 123456
-    #只有minglouapp有远程访问数据库权限，一般root账户是只能通过SSH连入。
   jpa:
     hibernate:
       ddl-auto: update #自动更新，切记不用create，会自动重新创建表的
@@ -21,5 +20,5 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.demo.Entity
-upload-photo-path: /usr/local/tomcat8/upload/photo/
-upload-music-path: /usr/local/tomcat8/upload/music/
+upload-photo-path: E:/tmp/photo/
+upload-music-path: E:/tmp/photo/

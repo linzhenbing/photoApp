@@ -45,6 +45,6 @@ public class Base64ToImg {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return fileName;
+        return fileName+dataPrix;
     }
 }

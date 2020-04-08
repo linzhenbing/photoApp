@@ -20,6 +20,8 @@ public class User {
     private String reserved1;
     private String reserved2;
 
+
+
     public Integer getId() {
         return id;
     }

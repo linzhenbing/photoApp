@@ -32,6 +32,6 @@ public class FileUpLoad {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return fileName;
+        return fileName+suffixName+"/"+name;
     }
 }

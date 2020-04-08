@@ -23,6 +23,11 @@ public class PhotoController {
     @Autowired
     private ParamsConfig paramsConfig;
 
+    @RequestMapping("/test")
+    public String test(){
+        return paramsConfig.getPhotoUploadPath();
+    }
+
 
     /***
      * 获取相册列表
@@ -31,7 +36,7 @@ public class PhotoController {
     @RequestMapping("/getImgList")
     public  JsonResult<List<Photo>> getImgList(){
         List<Photo> list = photoService.getImgList();
-        return new JsonResult<>(200,"",list);
+        return new JsonResult<>(200,paramsConfig.getPhotoUploadPath(),list);
     }
 
 
