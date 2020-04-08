@@ -127,5 +127,16 @@ public class PhotoController {
     }
 
 
+    /**
+     * 根据id返回一条记录
+     * @param id
+     * @return
+     */
+    @RequestMapping("/getRecordById")
+    public JsonResult<Photo> getRecordById(@RequestParam("id")int id){
+        Photo photo = photoService.getRecordById(id);
+        return new JsonResult<>(200,paramsConfig.getPhotoUploadPath(),photo);
+    }
+
 
 }

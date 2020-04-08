@@ -28,4 +28,8 @@ public class PhotoService {
     public void deleteMsg(String name) {
         photoDao.deleteMsg(name);
     }
+
+    public Photo getRecordById(int id) {
+        return photoDao.getRecordById(id);
+    }
 }

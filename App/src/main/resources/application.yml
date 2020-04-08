@@ -22,3 +22,4 @@ mybatis:
   type-aliases-package: com.example.demo.Entity
 upload-photo-path: E:/tmp/photo/
 upload-music-path: E:/tmp/photo/
+upload-video-path: E:/tmp/photo/

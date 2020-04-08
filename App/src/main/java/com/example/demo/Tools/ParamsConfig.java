@@ -9,15 +9,19 @@ public class ParamsConfig {
 
     @Value("${upload-photo-path}")
     private String photoUploadPath;
-
     public String getPhotoUploadPath() {
         return photoUploadPath;
     }
 
     @Value("${upload-music-path}")
     private String musicUploadPath;
-
     public String getMusicUploadPath() {
         return musicUploadPath;
+    }
+
+    @Value("${upload-video-path}")
+    private String videoUploadPath;
+    public String getVideoUploadPath() {
+        return videoUploadPath;
     }
 }
