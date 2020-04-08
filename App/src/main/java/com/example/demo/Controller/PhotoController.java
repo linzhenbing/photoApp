@@ -23,10 +23,27 @@ public class PhotoController {
     @Autowired
     private ParamsConfig paramsConfig;
 
-    @RequestMapping("/test")
-    public String test(){
+    /**
+     * 获取图片路径接口
+     * @return
+     */
+    @RequestMapping("/getPhotoUploadPath")
+    public String getPhotoUploadPath(){
         return paramsConfig.getPhotoUploadPath();
     }
+
+
+    /**
+     * 获取音频文件路径接口
+     * @return
+     */
+    @RequestMapping("/getMusicUploadPath")
+    public String getMusicUploadPath(){
+        return paramsConfig.getMusicUploadPath();
+    }
+
+
+
 
 
     /***
