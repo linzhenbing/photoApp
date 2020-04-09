@@ -14,6 +14,24 @@ public class Video {
     private String name;
     private String video;
     private String createtime;
+    private int type;
+    private String remark;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public int getId() {
         return id;

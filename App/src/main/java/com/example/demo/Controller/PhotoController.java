@@ -43,6 +43,12 @@ public class PhotoController {
     }
 
 
+    @RequestMapping("/getVideoUploadPath")
+    public String getVideoUploadPath(){
+        return paramsConfig.getVideoUploadPath();
+    }
+
+
 
 
 
@@ -73,7 +79,8 @@ public class PhotoController {
                                           @RequestParam(value = "img2",required = false) String img2,
                                           @RequestParam(value = "img3",required = false) String img3,
                                           @RequestParam(value = "music") MultipartFile music,
-                                          @RequestParam(value = "description",required = false)String description){
+                                          @RequestParam(value = "description",required = false)String description,
+                                          @RequestParam(value = "type")int type){
         if(photoService.searchByName(name)!=null){
             return new JsonResult<>(200,"学生已存在",null);
         }
@@ -91,7 +98,7 @@ public class PhotoController {
         String createTime = df.format(date);
         FileUpLoad file = new FileUpLoad();
         String musicName = file.fileUpLoad(music);
-        photoService.upLoadImg(name,ImgName1,ImgName2,ImgName3,musicName,createTime,description);
+        photoService.upLoadImg(name,ImgName1,ImgName2,ImgName3,musicName,createTime,description,type);
         return new JsonResult<>(200,null,null);
     }
 
@@ -120,7 +127,8 @@ public class PhotoController {
                 num = FileDelete.delFile(filePath);
             }
         }
-        filePath = rootMusicPath + photo.getMusic();
+        String[] musicName = photo.getMusic().split("/");
+        filePath = rootMusicPath + musicName[0];
         num = FileDelete.delFile(filePath);
         photoService.deleteMsg(name);
         return new JsonResult<>(200,"",null);
@@ -129,6 +137,7 @@ public class PhotoController {
 
     /**
      * 根据id返回一条记录
+     *
      * @param id
      * @return
      */

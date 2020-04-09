@@ -14,7 +14,7 @@ public class FileUpLoad {
         // 获取文件后缀名
         String name = file.getOriginalFilename();
         String suffixName = name.substring(name.lastIndexOf("."));
-        String fileName = getTimeTamp.getTimeTamp();
+        String fileName = GetTimeStamp.getTimeTamp();
         //String filePath = this.getClass().getResource("/").toURI().getPath()+"static/";
         // 用时间戳给文件命名
         /*改这个路径*/

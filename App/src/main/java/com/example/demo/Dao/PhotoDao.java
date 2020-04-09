@@ -15,7 +15,8 @@ public interface PhotoDao {
                    @Param("img3") String img3,
                    @Param("music") String music,
                    @Param("createtime")String createtime,
-                   @Param("description") String description);
+                   @Param("description") String description,
+                   @Param("type")int type);
 
     Photo searchByName(@Param("name") String name);
 

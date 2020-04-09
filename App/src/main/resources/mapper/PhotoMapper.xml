@@ -10,6 +10,8 @@
         <result column="music" property="music" />
         <result column="createtime" property="createtime" />
         <result column="description" property="description" />
+        <result column="type" property="type" />
+
     </resultMap>
 
     <select id="searchByName" resultMap="BaseResultMap">
@@ -26,8 +28,8 @@
 
 
     <insert id="upLoadImg" parameterType="com.example.demo.Entity.Photo">
-        insert into photo(name,img1,img2,img3,music,createtime,description)
-        values(#{name},#{img1},#{img2},#{img3},#{music},#{createtime},#{description})
+        insert into photo(name,img1,img2,img3,music,createtime,description,type)
+        values(#{name},#{img1},#{img2},#{img3},#{music},#{createtime},#{description},#{type})
     </insert>
 
     <delete id="deleteMsg" parameterType="String">

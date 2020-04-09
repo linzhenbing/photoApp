@@ -13,8 +13,8 @@ public class PhotoService {
 
     @Autowired
     private  PhotoDao photoDao;
-    public void upLoadImg(String name, String img1, String img2, String img3, String music, String createtime,String description) {
-        photoDao.upLoadImg(name,img1,img2,img3,music,createtime,description);
+    public void upLoadImg(String name, String img1, String img2, String img3, String music, String createtime,String description,int type) {
+        photoDao.upLoadImg(name,img1,img2,img3,music,createtime,description,type);
     }
 
     public Photo searchByName(String name) {

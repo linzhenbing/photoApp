@@ -28,7 +28,7 @@ public class Base64ToImg {
                 bytes[i] += 256;
             }
         }
-        String fileName =getTimeTamp.getTimeTamp();
+        String fileName = GetTimeStamp.getTimeTamp();
 //        String imgFilePath = System.getProperty("user.dir");
 //        System.out.println(imgFilePath);
         //imgFilePath = imgFilePath + "/../webapps/assets/photo/" + filename;

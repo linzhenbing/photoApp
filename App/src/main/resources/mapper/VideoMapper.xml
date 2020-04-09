@@ -6,5 +6,26 @@
         <result column="name" property="name" />
         <result column="video" property="video" />
         <result column="createtime" property="createtime" />
+        <result column="type" property="type" />
+        <result column="remark" property="remark" />
+
     </resultMap>
+
+    <select id="getVideoList" resultMap="BaseResultMap">
+        select * from video
+    </select>
+
+    <select id="getVideoByName" resultMap="BaseResultMap">
+        select * from video where name = #{name}
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select * from video where id = #{id}
+    </select>
+
+
+    <insert id="upLoadVideo" parameterType="com.example.demo.Entity.Video">
+        insert into video(name,video,createtime,type,remark)
+        values (#{name}, #{newFileName}, #{createtime}, #{remark})
+    </insert>
 </mapper>

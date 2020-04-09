@@ -17,7 +17,15 @@ public class Photo {
     private String music;
     private String createtime;
     private String description;
+    private int type;
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public int getId() {
         return id;
