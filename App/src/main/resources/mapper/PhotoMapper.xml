@@ -26,6 +26,10 @@
         select * from photo where id = #{id}
     </select>
 
+    <select id="getListByName" resultMap="BaseResultMap">
+        select * from photo where name like contact('%',#{name},'%')
+    </select>
+
 
     <insert id="upLoadImg" parameterType="com.example.demo.Entity.Photo">
         insert into photo(name,img1,img2,img3,music,createtime,description,type)

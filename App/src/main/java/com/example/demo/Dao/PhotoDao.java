@@ -25,4 +25,6 @@ public interface PhotoDao {
     void deleteMsg(@Param("name") String name);
 
     Photo getRecordById(@Param("id") int id);
+
+    List<Photo> getListByName(@Param("name") String name);
 }

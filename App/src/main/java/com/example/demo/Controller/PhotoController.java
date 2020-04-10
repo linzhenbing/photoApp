@@ -148,4 +148,16 @@ public class PhotoController {
     }
 
 
+    /**
+     * 根据name搜索照片记录
+     * @param name
+     * @return
+     */
+    @RequestMapping("/getListByName")
+    public JsonResult<List<Photo>> getListByName(@RequestParam("name")String name){
+        List<Photo> list = photoService.getListByName(name);
+        return new JsonResult<>(200,"",list);
+    }
+
+
 }

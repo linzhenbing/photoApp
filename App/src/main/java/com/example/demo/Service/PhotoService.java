@@ -32,4 +32,8 @@ public class PhotoService {
     public Photo getRecordById(int id) {
         return photoDao.getRecordById(id);
     }
+
+    public List<Photo> getListByName(String name) {
+        return photoDao.getListByName(name);
+    }
 }
