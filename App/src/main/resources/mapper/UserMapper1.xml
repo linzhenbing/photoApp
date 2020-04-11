@@ -25,6 +25,10 @@
            username = #{user.username} and password = #{user.password} and type = #{user.type}
      </select>
 
+    <select id="getRecordById" resultMap="BaseResultMap">
+        select * from video where id = #{id}
+    </select>
+
     <select id="sercahUser" resultMap="BaseResultMap">
         select * from user
         where

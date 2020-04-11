@@ -112,4 +112,11 @@ public class VideoController {
 
     }
 
+
+    @RequestMapping("/getRecordById")
+    public JsonResult<Video> getRecordById(@RequestParam("id") int id){
+        Video video = videoService.getRecordById(id);
+        return new JsonResult<>(200,"",video);
+    }
+
 }

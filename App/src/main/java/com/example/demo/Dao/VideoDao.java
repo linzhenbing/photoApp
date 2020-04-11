@@ -21,4 +21,6 @@ public interface VideoDao {
     Video getById(@Param("id") int id);
 
     void deleteById(@Param("id") int id);
+
+    Video getRecordById(@Param("id") int id);
 }

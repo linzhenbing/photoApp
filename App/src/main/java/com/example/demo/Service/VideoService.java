@@ -32,4 +32,8 @@ public class VideoService {
     public void deleteById(int id) {
         videoDao.deleteById(id);
     }
+
+    public Video getRecordById(int id) {
+        return videoDao.getRecordById(id);
+    }
 }
