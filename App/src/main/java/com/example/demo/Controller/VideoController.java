@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,7 +80,9 @@ public class VideoController {
                 e.printStackTrace();
             }
             newFileName += "/"+oldFileName;
-            String createtime = GetTimeStamp.getTimeTamp();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date();
+            String createtime = df.format(date);
             videoService.upLoadVideo(name,newFileName,createtime,type,remark);
 
 
@@ -99,6 +103,7 @@ public class VideoController {
         String videoName = video.getName();
         String[] name = videoName.split("/");
         int num = FileDelete.delFile(paramsConfig.getVideoUploadPath()+name[0]);
+        videoService.deleteById(id);
         if(num == 1){
             return new JsonResult<>(200,"删除成功",null);
         }else {

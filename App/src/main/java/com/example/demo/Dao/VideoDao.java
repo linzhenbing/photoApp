@@ -19,4 +19,6 @@ public interface VideoDao {
                      @Param("remark") String remark);
 
     Video getById(@Param("id") int id);
+
+    void deleteById(@Param("id") int id);
 }

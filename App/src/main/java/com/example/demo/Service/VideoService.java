@@ -28,4 +28,8 @@ public class VideoService {
     public Video getById(int id) {
         return videoDao.getById(id);
     }
+
+    public void deleteById(int id) {
+        videoDao.deleteById(id);
+    }
 }

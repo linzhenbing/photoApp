@@ -26,6 +26,10 @@
 
     <insert id="upLoadVideo" parameterType="com.example.demo.Entity.Video">
         insert into video(name,video,createtime,type,remark)
-        values (#{name}, #{newFileName}, #{createtime}, #{remark})
+        values (#{name}, #{newFileName}, #{createtime},#{type}, #{remark})
     </insert>
+
+    <delete id="deleteById" parameterType="int">
+        delete from video where id = #{id}
+    </delete>
 </mapper>
