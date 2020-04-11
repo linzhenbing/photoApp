@@ -27,7 +27,7 @@
     </select>
 
     <select id="getListByName" resultMap="BaseResultMap">
-        select * from photo where name like contact('%',#{name},'%')
+        select * from photo where name like contat('%',#{name},'%')
     </select>
 
 

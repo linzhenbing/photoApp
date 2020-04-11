@@ -71,6 +71,7 @@ public class PhotoController {
      * @param img3
      * @param music
      * @param description
+     * @param type
      * @return
      */
     @RequestMapping("/upLoadImg")
