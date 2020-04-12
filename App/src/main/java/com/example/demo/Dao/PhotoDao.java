@@ -27,4 +27,21 @@ public interface PhotoDao {
     Photo getRecordById(@Param("id") int id);
 
     List<Photo> getListByName(@Param("name") String name);
+
+    void updateWithoutFile(@Param("id") int id,
+                           @Param("description") String description,
+                           @Param("type") int type,
+                           @Param("createTime")String createTime);
+
+    void updateImg1(@Param("id") int id,
+                    @Param("imgName") String imgName);
+
+    void updateImg2(@Param("id") int id,
+                    @Param("imgName") String imgName);
+
+    void updateImg3(@Param("id") int id,
+                    @Param("imgName") String imgName);
+
+    void updateMusic(@Param("id") int id,
+                     @Param("musicName") String musicName);
 }

@@ -36,4 +36,24 @@ public class PhotoService {
     public List<Photo> getListByName(String name) {
         return photoDao.getListByName(name);
     }
+
+    public void updateWithoutFile(int id, String description, int type,String createTime) {
+        photoDao.updateWithoutFile(id, description, type, createTime);
+    }
+
+    public void updateImg1(int id, String imgName) {
+        photoDao.updateImg1(id,imgName);
+    }
+
+    public void updateImg2(int id, String imgName) {
+        photoDao.updateImg2(id,imgName);
+    }
+
+    public void updateImg3(int id, String imgName) {
+        photoDao.updateImg3(id,imgName);
+    }
+
+    public void updateMusic(int id, String musicName) {
+        photoDao.updateMusic(id,musicName);
+    }
 }

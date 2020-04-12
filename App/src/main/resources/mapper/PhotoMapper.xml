@@ -30,6 +30,42 @@
         select * from photo where name like concat('%',#{name},'%')
     </select>
 
+    <update id="updateWithoutFile" parameterType="com.example.demo.Entity.Photo">
+        update photo
+        set description = #{description}, type = #{type}, createtime = #{createTime}
+        where
+        id = #{id}
+    </update>
+
+    <update id="updateImg1" parameterType="com.example.demo.Entity.Photo">
+        update photo
+        set img1 = #{imgName}
+        where
+        id = #{id}
+    </update>
+
+    <update id="updateImg2" parameterType="com.example.demo.Entity.Photo">
+        update photo
+        set img2 = #{imgName}
+        where
+        id = #{id}
+    </update>
+
+    <update id="updateImg3" parameterType="com.example.demo.Entity.Photo">
+        update photo
+        set img3 = #{imgName}
+        where
+        id = #{id}
+    </update>
+
+    <update id="updateMusic" parameterType="com.example.demo.Entity.Photo">
+        update photo
+        set music = #{musicName}
+        where
+        id = #{id}
+    </update>
+
+
 
     <insert id="upLoadImg" parameterType="com.example.demo.Entity.Photo">
         insert into photo(name,img1,img2,img3,music,createtime,description,type)

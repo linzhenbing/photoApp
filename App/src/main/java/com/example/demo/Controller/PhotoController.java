@@ -161,4 +161,59 @@ public class PhotoController {
     }
 
 
+    /**
+     * 相册更新接口
+     * @param id
+     * @param img1（非必传）
+     * @param img2（非必传）
+     * @param img3（非必传）
+     * @param music（非必传）
+     * @param description
+     * @param type
+     * @return
+     */
+    @RequestMapping("/updatePhoto")
+    public JsonResult<Photo> updatePhoto(@RequestParam("id")int id,
+                                         @RequestParam(value = "img1", required = false)String img1,
+                                         @RequestParam(value = "img2", required = false)String img2,
+                                         @RequestParam(value = "img3", required = false)String img3,
+                                         @RequestParam(value = "music", required = false)MultipartFile music,
+                                         @RequestParam(value = "description")String description,
+                                         @RequestParam(value = "type")int type
+                                         ){
+        Photo photo = photoService.getRecordById(id);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        String createTime = df.format(date);
+        photoService.updateWithoutFile(id,description,type,createTime);
+        Base64ToImg base64ToImg = new Base64ToImg();
+        String ImgName;
+        int num;
+        if(img1 != null){
+            num = FileDelete.delFile(paramsConfig.getPhotoUploadPath()+photo.getImg1());
+            ImgName = base64ToImg.base64ToImg(img1);
+            photoService.updateImg1(id,ImgName);
+        }
+        if(img2 != null){
+            num = FileDelete.delFile(paramsConfig.getPhotoUploadPath()+photo.getImg2());
+            ImgName = base64ToImg.base64ToImg(img2);
+            photoService.updateImg2(id,ImgName);
+        }
+        if(img3 != null){
+            num = FileDelete.delFile(paramsConfig.getPhotoUploadPath()+photo.getImg3());
+            ImgName = base64ToImg.base64ToImg(img3);
+            photoService.updateImg3(id,ImgName);
+        }
+
+        if(music != null){
+            num = FileDelete.delFile(paramsConfig.getMusicUploadPath()+photo.getMusic().split("/")[0]);
+            FileUpLoad file = new FileUpLoad();
+            String musicName = file.fileUpLoad(music);
+            photoService.updateMusic(id,musicName);
+        }
+        return new JsonResult<>(200,"",null);
+    }
+
+
+
 }
