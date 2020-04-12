@@ -79,11 +79,13 @@ public class VideoController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            newFileName += "/"+oldFileName;
+            System.out.println(newFileName);
+            System.out.println(oldFileName);
+            String fileName = newFileName + "/"+oldFileName;
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();
             String createtime = df.format(date);
-            videoService.upLoadVideo(name,newFileName,createtime,type,remark);
+            videoService.upLoadVideo(name,fileName,createtime,type,remark);
 
 
         }else {
@@ -91,6 +93,56 @@ public class VideoController {
         }
         return new JsonResult<>(200,"",null);
     }
+
+
+    /**
+     * 视频更新接口
+     * @param id
+     * @param video（可选--非必传）
+     * @param type
+     * @param remark
+     * @return
+     */
+    @RequestMapping("/updateVideo")
+    public JsonResult<Video> updateVideo(@RequestParam("id")int id,
+                                         @RequestParam(value = "video",required = false)MultipartFile video,
+                                         @RequestParam("type") int type,
+                                         @RequestParam(value = "remark")String remark){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        String createtime = df.format(date);
+        if(video == null){
+            videoService.updateVideoWithoutFileById(id,type,remark,createtime);
+        }else {
+            /*删除文件*/
+            Video video1 = videoService.getById(id);
+            String name = video1.getVideo();
+            String[] name1 = name.split("/");
+            int num = FileDelete.delFile(paramsConfig.getVideoUploadPath()+name1[0]);
+
+            /*对新文件进行上传以及保存生成文件名倒数据库*/
+            String oldFileName = video.getOriginalFilename();
+            String suffixName = oldFileName.substring(oldFileName.lastIndexOf("."));
+            String newFileName = UUID.randomUUID().toString()+suffixName;
+            String filePath = paramsConfig.getVideoUploadPath() + newFileName;
+            File newFile = new File(filePath);
+            if (!newFile.getParentFile().exists()) {
+                newFile.getParentFile().mkdirs();
+            }
+            try {
+                video.transferTo(newFile);
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String fileName = newFileName + "/"+oldFileName;
+            videoService.updateVideoWhithFileById(id,fileName,type,remark,createtime);
+        }
+        return new JsonResult<>(200,"",null);
+
+    }
+
 
     /**
      * 根据id删除一条记录以及文件
@@ -110,15 +162,28 @@ public class VideoController {
             return new JsonResult<>(200,"删除失败",null);
         }
 
-
-
     }
 
-
+    /**
+     * 根据id返回一条视频记录
+     * @param id
+     * @return
+     */
     @RequestMapping("/getRecordById")
     public JsonResult<Video> getRecordById(@RequestParam("id") int id){
         Video video = videoService.getRecordById(id);
         return new JsonResult<>(200,"",video);
     }
 
+
+    /**
+     * 根据名字搜索视频
+     * @param name
+     * @return
+     */
+    @RequestMapping("/getListByName")
+    private JsonResult<List<Video>> getListByName(@RequestParam("name")String name){
+        List<Video> list = videoService.getListByName(name);
+        return new JsonResult<>(200,"",list);
+    }
 }

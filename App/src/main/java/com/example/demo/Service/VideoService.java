@@ -36,4 +36,16 @@ public class VideoService {
     public Video getRecordById(int id) {
         return videoDao.getRecordById(id);
     }
+
+    public List<Video> getListByName(String name) {
+        return videoDao.getListByName(name);
+    }
+
+    public void updateVideoWithoutFileById(int id, int type, String remark,String createtime) {
+        videoDao.updateVideoWithoutFileById(id,type,remark,createtime);
+    }
+
+    public void updateVideoWhithFileById(int id, String fileName, int type, String remark, String createtime) {
+        videoDao.updateVideoWhithFileById(id, fileName, type, remark, createtime);
+    }
 }

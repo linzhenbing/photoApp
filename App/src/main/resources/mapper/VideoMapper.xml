@@ -23,11 +23,36 @@
         select * from video where id = #{id}
     </select>
 
+    <select id="getRecordById" resultMap="BaseResultMap">
+        select * from video where id = #{id}
+    </select>
+
+    <select id="getListByName" resultMap="BaseResultMap">
+        select * from video where name like concat('%',#{name},'%')
+    </select>
+
 
     <insert id="upLoadVideo" parameterType="com.example.demo.Entity.Video">
         insert into video(name,video,createtime,type,remark)
         values (#{name}, #{newFileName}, #{createtime},#{type}, #{remark})
     </insert>
+
+
+    <update id="updateVideoWithoutFileById" parameterType="com.example.demo.Entity.Video">
+        update video
+        set type = #{type}, remark = #{remark}, createtime = #{createtime}
+        where
+        id = #{id}
+    </update>
+
+    <update id="updateVideoWhithFileById" parameterType="com.example.demo.Entity.Video">
+        update video
+        set video = #{fileName}, type = #{type}, remark = #{remark}, createtime = #{createtime}
+        where
+        id = #{id}
+    </update>
+
+
 
     <delete id="deleteById" parameterType="int">
         delete from video where id = #{id}

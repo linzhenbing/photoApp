@@ -23,4 +23,17 @@ public interface VideoDao {
     void deleteById(@Param("id") int id);
 
     Video getRecordById(@Param("id") int id);
+
+    List<Video> getListByName(@Param("name") String name);
+
+    void updateVideoWithoutFileById(@Param("id") int id,
+                                    @Param("type") int type,
+                                    @Param("remark") String remark,
+                                    @Param("createtime")String createtime);
+
+    void updateVideoWhithFileById(@Param("id") int id,
+                                  @Param("fileName") String fileName,
+                                  @Param("type") int type,
+                                  @Param("remark") String remark,
+                                  @Param("createtime") String createtime);
 }
