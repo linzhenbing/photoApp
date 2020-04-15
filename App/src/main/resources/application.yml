@@ -23,3 +23,4 @@ mybatis:
 upload-photo-path: E:/tmp/photo/
 upload-music-path: E:/tmp/photo/
 upload-video-path: E:/tmp/photo/
+upload-technology-path: E:/tmp/photo/

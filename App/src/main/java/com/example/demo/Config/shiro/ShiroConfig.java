@@ -2,6 +2,7 @@ package com.example.demo.Config.shiro;
 
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,16 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
+
+    // 配置org.apache.shiro.web.session.mgt.DefaultWebSessionManager(shiro session的管理)
+    @Bean
+    public DefaultWebSessionManager getDefaultWebSessionManager() {
+        DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+        defaultWebSessionManager.setGlobalSessionTimeout(1000 * 60 * 60 * 24);// 会话过期时间，单位：毫秒(在无操作时开始计时)--->24h
+        defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
+        defaultWebSessionManager.setSessionIdCookieEnabled(true);
+        return defaultWebSessionManager;
+    }
     /**
      * 创建ShiroFilterFactoryBean
      * @return
@@ -30,10 +41,12 @@ public class ShiroConfig {
          * 5.role：必须得到角色权限才可以访问
          */
         Map<String, String> filterMap = new LinkedHashMap<String,String>();
+        filterMap.put("/user/login","anon");
         filterMap.put("/user/getUser","perms[super]");
         filterMap.put("/user/forbidUser","perms[super]");
         filterMap.put("/user/enableUser","perms[super]");
         filterMap.put("/user/deleteUser","perms[super]");
+        filterMap.put("/**","authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
         return shiroFilterFactoryBean;
     }
@@ -45,8 +58,10 @@ public class ShiroConfig {
     @Bean(name = "defaultWebSecurityManager")
     public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm")UserRealm userRealm){
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
+
         /*关联一个Realm*/
         defaultWebSecurityManager.setRealm(userRealm);
+        defaultWebSecurityManager.setSessionManager(getDefaultWebSessionManager());
         return defaultWebSecurityManager;
     }
 

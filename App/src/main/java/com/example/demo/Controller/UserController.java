@@ -5,6 +5,10 @@ import com.example.demo.Entity.User;
 import com.example.demo.Service.UserService;
 import com.example.demo.Tools.JsonResult;
 import com.example.demo.Tools.Md5;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,6 +87,16 @@ public class UserController {
     @PostMapping("/login")
     public JsonResult<JSONObject> login(@RequestBody User user) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         user.setPassword(Md5.changeToMd5(user.getPassword()));
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
+        try{
+            SecurityUtils.getSubject().login(token);
+            SecurityUtils.getSubject().getSession().setTimeout(1000*60*60*24);
+        }catch (UnknownAccountException e){
+            return new JsonResult<>(200,"用户名或密码错误",null);
+        }catch (IncorrectCredentialsException e){
+            return new JsonResult<>(200,"用户名或密码错误",null);
+        }
+
         User result = userService.login(user);
         if(result == null){
             return new JsonResult<>(200,"用户名或密码错误",null);

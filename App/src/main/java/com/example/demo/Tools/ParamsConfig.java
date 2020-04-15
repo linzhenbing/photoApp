@@ -24,4 +24,10 @@ public class ParamsConfig {
     public String getVideoUploadPath() {
         return videoUploadPath;
     }
+
+    @Value("${upload-technology-path}")
+    private String technologyUploadPath;
+    public String getTechnologyUploadPath() {
+        return technologyUploadPath;
+    }
 }

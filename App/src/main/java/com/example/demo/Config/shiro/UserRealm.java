@@ -22,6 +22,7 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
         /*给资源进行授权*/
+        System.out.println("执行授权");
         User user=(User) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         if(user.getType() == 1){
@@ -38,6 +39,7 @@ public class UserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        System.out.println("执行认证逻辑");
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String name = token.getUsername();
         User user = userService.getUserByUserName(name);
