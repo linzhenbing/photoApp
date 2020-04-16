@@ -1,9 +1,12 @@
 package com.example.demo.Config.shiro;
 
+import com.example.demo.Dao.UserDao;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Configuration
+@ConditionalOnBean(UserDao.class)
 public class ShiroConfig {
 
     // 配置org.apache.shiro.web.session.mgt.DefaultWebSessionManager(shiro session的管理)
@@ -41,6 +45,7 @@ public class ShiroConfig {
          * 5.role：必须得到角色权限才可以访问
          */
         Map<String, String> filterMap = new LinkedHashMap<String,String>();
+        filterMap.put("/video/test","anon");
         filterMap.put("/user/login","anon");
         filterMap.put("/user/getUser","perms[super]");
         filterMap.put("/user/forbidUser","perms[super]");
@@ -65,13 +70,6 @@ public class ShiroConfig {
         return defaultWebSecurityManager;
     }
 
-    /**
-     * 创建Realm
-     */
-    @Bean(name = "userRealm")
-    public UserRealm getRealm(){
-        return new UserRealm();
-    }
 
     /**
      * 注入配置自定义的密码比较器

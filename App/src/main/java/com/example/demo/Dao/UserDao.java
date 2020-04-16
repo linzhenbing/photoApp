@@ -25,4 +25,6 @@ public interface UserDao {
     void updateUser(@Param("user") User user);
 
     List<User> sercahUser(@Param("username") String username);
+
+    User judge(@Param("user") User user);
 }

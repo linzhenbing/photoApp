@@ -160,7 +160,7 @@ public class UserController {
         User user = new User();
         user.setUsername(userName);
         user.setPassword(Md5.changeToMd5(oldPassword));
-        if (userService.login(user) == null){
+        if (userService.judge(user) == null){
             return new JsonResult<>(200,"原始密码错误",null);
         }else {
             user.setPassword(Md5.changeToMd5(newPassword));

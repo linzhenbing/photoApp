@@ -11,7 +11,7 @@
         <result column="remark" property="remark" />
     </resultMap>
 
-    <select id="getTechList" resultMap="BaseResultMap>">
+    <select id="getTechList" resultMap="BaseResultMap">
         select * from technology
     </select>
 

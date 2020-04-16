@@ -10,9 +10,12 @@ spring:
     username: root
     password: 123456
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:
       ddl-auto: update #自动更新，切记不用create，会自动重新创建表的
     show-sql: true
+  jmx:
+    enabled: false
   servlet:
     multipart:
       max-file-size: 1024MB
@@ -20,7 +23,7 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.demo.Entity
-upload-photo-path: E:/tmp/photo/
-upload-music-path: E:/tmp/photo/
-upload-video-path: E:/tmp/photo/
-upload-technology-path: E:/tmp/photo/
+upload-photo-path: /root/apache-tomcat-8.5.39/webapps/static/photo
+upload-music-path: /root/apache-tomcat-8.5.39/webapps/static/music
+upload-video-path: /root/apache-tomcat-8.5.39/webapps/static/video
+upload-technology-path: /root/apache-tomcat-8.5.39/webapps/static/technology

@@ -35,6 +35,10 @@
         username like concat('%',#{username},'%')
     </select>
 
+    <select id="judge" resultMap="BaseResultMap">
+        select * from user where username = #{user.username} and password = #{user.password}
+    </select>
+
 
     <update id="forbidUser" parameterType="String">
         update user

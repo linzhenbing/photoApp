@@ -49,4 +49,8 @@ public class UserService {
     public List<User> searchUser(String username) {
         return userDao.sercahUser(username);
     }
+
+    public User judge(User user) {
+        return userDao.judge(user);
+    }
 }
