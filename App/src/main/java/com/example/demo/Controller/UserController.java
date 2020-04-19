@@ -10,6 +10,8 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
@@ -25,6 +27,9 @@ public class UserController {
 
     @Autowired
     private  UserService userService;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
 
     @PostMapping("/info")
@@ -57,7 +62,7 @@ public class UserController {
 
     /**
      * 注册接口
-     * @param user(username,password,type)
+     * @param user(username,password,type,mail)
      * @return
      * @throws UnsupportedEncodingException
      * @throws NoSuchAlgorithmException
@@ -72,7 +77,7 @@ public class UserController {
         Date date = new Date();
         user.setCreatetime(df.format(date));
         user.setPassword(Md5.changeToMd5(user.getPassword()));
-        user.setState(1);
+        user.setState(0);
         userService.registered(user);
         return new JsonResult<>(200,"插入成功",null);
     }
@@ -156,7 +161,8 @@ public class UserController {
     @PostMapping("/updateUser")
     public JsonResult<User> updateUser(@RequestParam(value = "userName")String userName,
                                        @RequestParam(value = "oldPassword")String oldPassword,
-                                       @RequestParam(value = "newPassword")String newPassword) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+                                       @RequestParam(value = "newPassword")String newPassword,
+                                       @RequestParam(value = "mail", defaultValue = "")String mail) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         User user = new User();
         user.setUsername(userName);
         user.setPassword(Md5.changeToMd5(oldPassword));
@@ -180,4 +186,48 @@ public class UserController {
         return new JsonResult<>(200,"",users);
     }
 
+
+    /**
+     * 更新邮箱接口
+     * @param userName
+     * @param mail
+     * @return
+     */
+    @RequestMapping("/updateMail")
+    public JsonResult<User> updateMail(@RequestParam("userName")String userName,
+                                       @RequestParam("mail")String mail){
+        userService.updateMail(userName,mail);
+        return new JsonResult<>(200,"",null);
+    }
+
+
+    /**
+     * 重置密码接口（需验证邮箱）
+     * @param userName
+     * @param mail
+     * @return
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
+     */
+    @RequestMapping("/resetPassword")
+    public JsonResult<User> resetPassword(@RequestParam("userName")String userName,
+                                          @RequestParam("mail")String mail) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        User user = userService.getUserByUserName(userName);
+        if(mail.equals(user.getMail())){
+            Integer randNum = (int)(Math.random()* (999999)+1);//产生(0,999999]之间的随机数
+            String workPassWord = String.format("%06d",randNum);//进行六位数补全
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("1176026424@qq.com");
+            message.setTo(mail);
+            message.setSubject("您好，"+userName);
+            message.setText("您重置后的密码为："+workPassWord);
+            String newPassword = Md5.changeToMd5(workPassWord);
+            userService.resetPassword(userName,newPassword);
+            javaMailSender.send(message);
+            return new JsonResult<>(200,"修改成功",null);
+        }else {
+            return new JsonResult<>(200,"邮箱验证失败",null);
+
+        }
+    }
 }

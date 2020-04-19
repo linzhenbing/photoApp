@@ -18,7 +18,7 @@ public class User {
     private String createtime;
     private Integer type;
     private String reserved1;
-    private String reserved2;
+    private String mail;
 
 
 
@@ -62,12 +62,12 @@ public class User {
         this.reserved1 = reserved1;
     }
 
-    public String getReserved2() {
-        return reserved2;
+    public String getMail() {
+        return mail;
     }
 
-    public void setReserved2(String reserved2) {
-        this.reserved2 = reserved2;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public String getCreatetime() {

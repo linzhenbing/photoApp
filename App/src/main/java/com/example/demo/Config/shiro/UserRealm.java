@@ -10,13 +10,13 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
 public class UserRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
 
     /**
      * 执行授权逻辑
+     *
      * @param principalCollection
      * @return
      */
@@ -25,9 +25,9 @@ public class UserRealm extends AuthorizingRealm {
 
         /*给资源进行授权*/
         System.out.println("执行授权");
-        User user=(User) principalCollection.getPrimaryPrincipal();
+        User user = (User) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        if(user.getType() == 1){
+        if (user.getType() == 1) {
             simpleAuthorizationInfo.addStringPermission("super");
         }
         return simpleAuthorizationInfo;
@@ -35,6 +35,7 @@ public class UserRealm extends AuthorizingRealm {
 
     /**
      * 执行认证逻辑
+     *
      * @param authenticationToken
      * @return
      * @throws AuthenticationException
@@ -45,10 +46,10 @@ public class UserRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String name = token.getUsername();
         User user = userService.getUserByUserName(name);
-        if(user == null){
+        if (user == null) {
             return null;
-        }else {
-            return new SimpleAuthenticationInfo(user,user.getPassword(),getName());
+        } else {
+            return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
         }
     }
 }

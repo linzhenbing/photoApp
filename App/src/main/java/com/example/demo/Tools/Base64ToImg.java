@@ -20,7 +20,6 @@ public class Base64ToImg {
             String sb[] = dataPrix.split("/");
             dataPrix = "."+sb[1];
             data = d[1];//获取到的图片内容
-            System.out.println(dataPrix);
         }
         byte[] bytes = Base64Utils.decodeFromString(data);
         for(int i = 0; i<bytes.length; i++){
@@ -33,7 +32,8 @@ public class Base64ToImg {
 //        System.out.println(imgFilePath);
         //imgFilePath = imgFilePath + "/../webapps/assets/photo/" + filename;
         /*改这个路径*/
-        String imgFilePath =  paramsConfig.getPhotoUploadPath() + fileName + dataPrix;
+
+        String imgFilePath =  "/root/apache-tomcat-8.5.39/webapps/static/photo/" + fileName + dataPrix;
         System.out.println(imgFilePath);
         try{
             OutputStream outputStream = new FileOutputStream(imgFilePath);

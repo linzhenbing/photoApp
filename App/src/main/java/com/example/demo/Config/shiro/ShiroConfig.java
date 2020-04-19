@@ -1,6 +1,7 @@
 package com.example.demo.Config.shiro;
 
 import com.example.demo.Dao.UserDao;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
@@ -14,20 +15,8 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 @Configuration
-@ConditionalOnBean(UserDao.class)
 public class ShiroConfig {
-
-    @Bean
-    public FilterRegistrationBean delegatingFilterProxy(){
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
-        proxy.setTargetFilterLifecycle(true);
-        proxy.setTargetBeanName("shiroFilterFactoryBean");
-        filterRegistrationBean.setFilter(proxy);
-        return filterRegistrationBean;
-    }
 
     // 配置org.apache.shiro.web.session.mgt.DefaultWebSessionManager(shiro session的管理)
     @Bean
@@ -57,8 +46,9 @@ public class ShiroConfig {
          * 5.role：必须得到角色权限才可以访问
          */
         Map<String, String> filterMap = new LinkedHashMap<String,String>();
-        filterMap.put("/video/test","anon");
         filterMap.put("/user/login","anon");
+        filterMap.put("/user/registered","anon");
+        filterMap.put("/user/resetPassword","anon");
         filterMap.put("/user/getUser","perms[super]");
         filterMap.put("/user/forbidUser","perms[super]");
         filterMap.put("/user/enableUser","perms[super]");
@@ -89,8 +79,6 @@ public class ShiroConfig {
     public UserRealm getRealm(){
         return new UserRealm();
     }
-
-
 
     /**
      * 注入配置自定义的密码比较器

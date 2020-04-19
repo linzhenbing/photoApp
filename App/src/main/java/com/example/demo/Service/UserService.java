@@ -53,4 +53,12 @@ public class UserService {
     public User judge(User user) {
         return userDao.judge(user);
     }
+
+    public void updateMail(String userName, String mail) {
+        userDao.updateMail(userName,mail);
+    }
+
+    public void resetPassword(String userName, String newPassword) {
+        userDao.resetPassword(userName,newPassword);
+    }
 }

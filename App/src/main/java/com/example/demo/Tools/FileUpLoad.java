@@ -18,7 +18,7 @@ public class FileUpLoad {
         //String filePath = this.getClass().getResource("/").toURI().getPath()+"static/";
         // 用时间戳给文件命名
         /*改这个路径*/
-        String filePath = paramsConfig.getMusicUploadPath() + fileName + suffixName;
+        String filePath = "/root/apache-tomcat-8.5.39/webapps/static/music/" + fileName + suffixName;
         File dest = new File(filePath);
         // 检测是否存在目录
         if (!dest.getParentFile().exists()) {

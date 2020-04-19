@@ -61,9 +61,23 @@
         username=#{username}
     </update>
 
+    <update id="updateMail" parameterType="com.example.demo.Entity.User">
+        update user
+        set mail = #{mail}
+        where
+        username = #{userName}
+    </update>
+
+    <update id="resetPassword" parameterType="com.example.demo.Entity.User">
+        update user
+        set password = #{newPassword}
+        where
+        username = #{userName}
+    </update>
+
      <insert id="registered" parameterType="com.example.demo.Entity.User">
-         insert into user(username,password,state,createtime,type)
-         values (#{user.username},#{user.password},#{user.state},#{user.createtime},#{user.type})
+         insert into user(username,password,state,createtime,type,mail)
+         values (#{user.username},#{user.password},#{user.state},#{user.createtime},#{user.type},#{user.mail})
      </insert>
 
     <delete id="deleteUser" parameterType="String">

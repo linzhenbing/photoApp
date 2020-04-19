@@ -27,4 +27,10 @@ public interface UserDao {
     List<User> sercahUser(@Param("username") String username);
 
     User judge(@Param("user") User user);
+
+    void updateMail(@Param("userName") String userName,
+                    @Param("mail") String mail);
+
+    void resetPassword(@Param("userName") String userName,
+                       @Param("newPassword") String newPassword);
 }

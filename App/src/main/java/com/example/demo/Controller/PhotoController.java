@@ -59,7 +59,7 @@ public class PhotoController {
     @RequestMapping("/getImgList")
     public  JsonResult<List<Photo>> getImgList(){
         List<Photo> list = photoService.getImgList();
-        return new JsonResult<>(200,paramsConfig.getPhotoUploadPath(),list);
+        return new JsonResult<>(200,"http://106.15.88.217:8080/static/photo/",list);
     }
 
 
@@ -145,7 +145,7 @@ public class PhotoController {
     @RequestMapping("/getRecordById")
     public JsonResult<Photo> getRecordById(@RequestParam("id")int id){
         Photo photo = photoService.getRecordById(id);
-        return new JsonResult<>(200,paramsConfig.getPhotoUploadPath(),photo);
+        return new JsonResult<>(200,"http://106.15.88.217:8080/static/photo/",photo);
     }
 
 
