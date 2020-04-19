@@ -26,6 +26,13 @@ spring:
     password: mmybtoihxzrjgeff
     protocol: smtp
     default-encoding: UTF-8
+
+    properties:
+      mail:
+        smtp:
+          timeout: 25000
+          connectiontimeout: 25000
+          writetimeout: 25000
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.demo.Entity

@@ -29,7 +29,7 @@ public class PhotoController {
      */
     @RequestMapping("/getPhotoUploadPath")
     public String getPhotoUploadPath(){
-        return paramsConfig.getPhotoUploadPath();
+        return "http://106.15.88.217:8080/static/photo/";
     }
 
 
@@ -39,13 +39,27 @@ public class PhotoController {
      */
     @RequestMapping("/getMusicUploadPath")
     public String getMusicUploadPath(){
-        return paramsConfig.getMusicUploadPath();
+        return "http://106.15.88.217:8080/static/music/";
     }
 
 
+    /**
+     * 获取视频图片路径接口
+     * @return
+     */
     @RequestMapping("/getVideoUploadPath")
     public String getVideoUploadPath(){
-        return paramsConfig.getVideoUploadPath();
+        return "http://106.15.88.217:8080/static/video/";
+    }
+
+
+    /**
+     * 返回科技作品视频路径接口
+     * @return
+     */
+    @RequestMapping("/getTechnologyUploadPath")
+    public String getTechnologyUploadPath(){
+        return "http://106.15.88.217:8080/static/technology/";
     }
 
 

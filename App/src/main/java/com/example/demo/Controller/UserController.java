@@ -161,8 +161,8 @@ public class UserController {
     @PostMapping("/updateUser")
     public JsonResult<User> updateUser(@RequestParam(value = "userName")String userName,
                                        @RequestParam(value = "oldPassword")String oldPassword,
-                                       @RequestParam(value = "newPassword")String newPassword,
-                                       @RequestParam(value = "mail", defaultValue = "")String mail) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+                                       @RequestParam(value = "newPassword")String newPassword
+    ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         User user = new User();
         user.setUsername(userName);
         user.setPassword(Md5.changeToMd5(oldPassword));
@@ -208,6 +208,7 @@ public class UserController {
      * @return
      * @throws UnsupportedEncodingException
      * @throws NoSuchAlgorithmException
+     *
      */
     @RequestMapping("/resetPassword")
     public JsonResult<User> resetPassword(@RequestParam("userName")String userName,
@@ -222,8 +223,9 @@ public class UserController {
             message.setSubject("您好，"+userName);
             message.setText("您重置后的密码为："+workPassWord);
             String newPassword = Md5.changeToMd5(workPassWord);
-            userService.resetPassword(userName,newPassword);
             javaMailSender.send(message);
+            userService.resetPassword(userName,newPassword);
+
             return new JsonResult<>(200,"修改成功",null);
         }else {
             return new JsonResult<>(200,"邮箱验证失败",null);
