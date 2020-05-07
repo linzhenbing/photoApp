@@ -94,8 +94,8 @@ public class UserController {
         user.setPassword(Md5.changeToMd5(user.getPassword()));
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
         try{
-            SecurityUtils.getSubject().login(token);
             SecurityUtils.getSubject().getSession().setTimeout(1000*60*60*24);
+            SecurityUtils.getSubject().login(token);
         }catch (UnknownAccountException e){
             return new JsonResult<>(200,"用户名或密码错误",null);
         }catch (IncorrectCredentialsException e){
@@ -220,16 +220,14 @@ public class UserController {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom("1176026424@qq.com");
             message.setTo(mail);
-            message.setSubject("您好，"+userName);
+            message.setSubject("您好，"+ userName);
             message.setText("您重置后的密码为："+workPassWord);
             String newPassword = Md5.changeToMd5(workPassWord);
             javaMailSender.send(message);
             userService.resetPassword(userName,newPassword);
-
             return new JsonResult<>(200,"修改成功",null);
         }else {
             return new JsonResult<>(200,"邮箱验证失败",null);
-
         }
     }
 }

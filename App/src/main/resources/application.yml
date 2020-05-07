@@ -26,13 +26,24 @@ spring:
     password: mmybtoihxzrjgeff
     protocol: smtp
     default-encoding: UTF-8
+    port: 465
 
     properties:
       mail:
         smtp:
+          ssl:
+            enable: true
           timeout: 25000
           connectiontimeout: 25000
           writetimeout: 25000
+          starttls:
+            enable: true
+            required: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.demo.Entity

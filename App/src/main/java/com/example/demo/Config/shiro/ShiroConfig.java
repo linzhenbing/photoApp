@@ -2,8 +2,11 @@ package com.example.demo.Config.shiro;
 
 import com.example.demo.Dao.UserDao;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,11 +21,41 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
+    /**
+     * cookie对象;
+     * rememberMeCookie()方法是设置Cookie的生成模版，比如cookie的name，cookie的有效时间等等。
+     * @return
+     */
+    @Bean
+    public SimpleCookie rememberMeCookie(){
+        //System.out.println("ShiroConfiguration.rememberMeCookie()");
+        //这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
+        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+        //<!-- 记住我cookie生效时间1天 ,单位秒;-->
+        simpleCookie.setMaxAge(60*60*24);
+        return simpleCookie;
+    }
+
+    /**
+     * cookie管理对象;
+     * rememberMeManager()方法是生成rememberMe管理器，而且要将这个rememberMe管理器设置到securityManager中
+     * @return
+     */
+    @Bean
+    public CookieRememberMeManager rememberMeManager(){
+        //System.out.println("ShiroConfiguration.rememberMeManager()");
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(rememberMeCookie());
+        //rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度(128 256 512 位)
+        cookieRememberMeManager.setCipherKey(Base64.decode("2AvVhdsgUs0FSA3SDFAdag=="));
+        return cookieRememberMeManager;
+    }
+
+
     // 配置org.apache.shiro.web.session.mgt.DefaultWebSessionManager(shiro session的管理)
     @Bean
     public DefaultWebSessionManager getDefaultWebSessionManager() {
         DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
-        defaultWebSessionManager.setGlobalSessionTimeout(1000 * 60 * 60 * 24);// 会话过期时间，单位：毫秒(在无操作时开始计时)--->24h
         defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
         defaultWebSessionManager.setSessionIdCookieEnabled(true);
         return defaultWebSessionManager;
@@ -46,14 +79,16 @@ public class ShiroConfig {
          * 5.role：必须得到角色权限才可以访问
          */
         Map<String, String> filterMap = new LinkedHashMap<String,String>();
+
         filterMap.put("/user/login","anon");
         filterMap.put("/user/registered","anon");
         filterMap.put("/user/resetPassword","anon");
+        filterMap.put("/user/deleteUser","anon");
         filterMap.put("/user/getUser","perms[super]");
         filterMap.put("/user/forbidUser","perms[super]");
         filterMap.put("/user/enableUser","perms[super]");
-        filterMap.put("/user/deleteUser","perms[super]");
-        filterMap.put("/**","authc");
+//        filterMap.put("/user/deleteUser","perms[super]");
+        filterMap.put("/**","user");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
         return shiroFilterFactoryBean;
     }
@@ -69,6 +104,8 @@ public class ShiroConfig {
         /*关联一个Realm*/
         defaultWebSecurityManager.setRealm(userRealm);
         defaultWebSecurityManager.setSessionManager(getDefaultWebSessionManager());
+        //注入记住我管理器
+        defaultWebSecurityManager.setRememberMeManager(rememberMeManager());
         return defaultWebSecurityManager;
     }
 
